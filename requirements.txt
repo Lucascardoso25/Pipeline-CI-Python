@@ -1,0 +1,1 @@
+# Este app de exemplo não usa dependências externas em tempo de execução.
