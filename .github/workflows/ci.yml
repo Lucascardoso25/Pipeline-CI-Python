@@ -26,6 +26,21 @@ jobs:
         run: flake8 app tests
 
   testes:
+  qualidade:
+    name: Testes de qualidade
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+
+      - name: Executar testes
+        run: pytest
+  
     name: Testes unitários
     needs: lint
     runs-on: ubuntu-latest
