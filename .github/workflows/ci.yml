@@ -1,4 +1,4 @@
-
+```yaml
 name: CI
 
 on:
@@ -20,8 +20,8 @@ jobs:
       - name: Configurar Python
         uses: actions/setup-python@v5
         with:
-          python-version: ${{matrix.python-version}}
-          cache:'pip'
+          python-version: "3.12"
+          cache: "pip"
 
       - name: Instalar dependências de desenvolvimento
         run: pip install -r requirements-dev.txt
@@ -50,6 +50,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+          cache: "pip"
 
       - name: Instalar dependências de desenvolvimento
         run: pip install -r requirements-dev.txt
@@ -60,7 +61,9 @@ jobs:
 
   cobertura:
     name: Cobertura de código
+
     needs: qualidade
+
     runs-on: ubuntu-latest
 
     steps:
@@ -71,6 +74,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+          cache: "pip"
 
       - name: Instalar dependências de desenvolvimento
         run: pip install -r requirements-dev.txt
@@ -81,7 +85,9 @@ jobs:
 
   seguranca:
     name: Análise de segurança
+
     needs: cobertura
+
     runs-on: ubuntu-latest
 
     steps:
@@ -94,6 +100,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+          cache: "pip"
 
       - name: Instalar dependências de desenvolvimento
         run: pip install -r requirements-dev.txt
@@ -105,4 +112,4 @@ jobs:
         uses: gitleaks/gitleaks-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+```
