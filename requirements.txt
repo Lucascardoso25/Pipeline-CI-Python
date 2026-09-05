@@ -1,1 +1,4 @@
-# Este app de exemplo não usa dependências externas em tempo de execução.
+pytest
+pytest-cov
+flake8
+request==2.34.2
