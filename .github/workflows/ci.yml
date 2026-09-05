@@ -1,3 +1,4 @@
+
 name: CI
 
 on:
@@ -7,9 +8,11 @@ on:
     branches: [main]
 
 jobs:
+
   lint:
     name: Análise de código (lint)
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout do código
         uses: actions/checkout@v4
@@ -25,12 +28,16 @@ jobs:
       - name: Rodar flake8
         run: flake8 app tests
 
-  testes:
+
   qualidade:
     name: Testes de qualidade
+
+    needs: lint
+
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ["3.10", "3.11", "3.12"]
 
     runs-on: ${{ matrix.os }}
 
@@ -38,31 +45,23 @@ jobs:
       - name: Baixar código
         uses: actions/checkout@v4
 
-      - name: Executar testes
-        run: pytest
-  
-    name: Testes unitários
-    needs: lint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout do código
-        uses: actions/checkout@v4
-
       - name: Configurar Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: ${{ matrix.python-version }}
 
       - name: Instalar dependências de desenvolvimento
         run: pip install -r requirements-dev.txt
 
-      - name: Rodar testes com pytest
+      - name: Executar testes
         run: pytest -v
+
 
   cobertura:
     name: Cobertura de código
-    needs: testes
+    needs: qualidade
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout do código
         uses: actions/checkout@v4
@@ -78,10 +77,12 @@ jobs:
       - name: Rodar testes com cobertura (mínimo 80%)
         run: pytest --cov=app --cov-report=term-missing --cov-fail-under=80
 
+
   seguranca:
     name: Análise de segurança
     needs: cobertura
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout do código
         uses: actions/checkout@v4
@@ -103,3 +104,4 @@ jobs:
         uses: gitleaks/gitleaks-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
