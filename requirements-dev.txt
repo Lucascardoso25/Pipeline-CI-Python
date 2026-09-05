@@ -1,5 +1,5 @@
-pytest
-pytest-cov
-flake8
-request==2.34.2
+flake8==7.1.1
+pytest==8.3.3
+pytest-cov==5.0.0
+bandit==1.7.10
 
