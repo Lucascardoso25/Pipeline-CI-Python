@@ -1,4 +1,4 @@
 pytest
 pytest-cov
 flake8
-request==2.34.2
+requests==2.34.2
