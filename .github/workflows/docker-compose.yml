@@ -1,0 +1,9 @@
+services:
+  calculadora-app:
+    build: .
+    image: luk4ku/pipeline-ci:latest
+    tty: true
+
+  servico-vizinho:
+    image: alpine
+    command: sleep infinity

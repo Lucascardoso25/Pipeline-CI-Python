@@ -2,6 +2,7 @@ services:
   calculadora-app:
     build: .
     image: luk4ku/pipeline-ci:latest
+    command: tail -f /dev/null
 
   servico-vizinho:
     image: alpine
