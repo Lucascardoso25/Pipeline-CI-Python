@@ -1,0 +1,10 @@
+services:
+
+calculadora-app:
+
+ build:
+ image:luk4ku/pipeline-ci:latest
+
+servico-vizinho:
+ image:alpine
+ command:sleep infinity
